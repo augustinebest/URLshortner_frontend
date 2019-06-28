@@ -20,7 +20,6 @@ class Homepage extends Component {
             link: null,
             ol: null
         }
-        alert(1)
     }
 
     handleChange = (e) => {
