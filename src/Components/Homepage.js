@@ -119,7 +119,7 @@ class Homepage extends Component {
                                         <div className='eg'>(e.g &nbsp; fashsionweek7)</div>
                                         {
                                             link &&
-                                            <div className='links'>Visit: <a href={ol} target='_blank'>{link}</a></div>
+                                            <div className='links'><div>Visit:</div> <div><a href={ol} target='_blank'>{link}</a></div></div>
                                         }
                                         <div className='buttons'>
                                             <button  className={!loading ? 'btn2' : 'btn3'}>{!loading ? <span>Shorten URL</span> : <span className='loading'>Loading...</span> }</button>

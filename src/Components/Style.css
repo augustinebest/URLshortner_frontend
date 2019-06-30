@@ -4,7 +4,8 @@ html, body { margin: 0; padding: 0; }
 /* Navbar Begins */
 .navbar {
     width: 100%; 
-    border: 1px solid rgb(202, 29, 29); 
+    border-top: 1px solid rgb(202, 29, 29); 
+    border-bottom: 1px solid rgb(202, 29, 29); 
     margin-top: 12px; margin-bottom: 12px; 
     height: 40px; display: grid; 
     align-items: center;
@@ -95,7 +96,7 @@ input[type='text']:focus {
     margin-top: 10px;
     font-size: 14px;
     padding: 6px; background-color: #eee;
-    display: flex; justify-content: center;
+    text-align: center;
 }
 
 .loading {
