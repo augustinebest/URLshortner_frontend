@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Alerts from '../Components/Alert/Alert'
 import Navbar from './Navbar.js';
-import Content from './Content';
-import Footer from './Footer';
+// import Content from './Content';
+// import Footer from './Footer';
 import validate from '../Factories/Validate';
 import './Style.css';
 import axios from 'axios';
@@ -130,8 +130,8 @@ class Homepage extends Component {
                             </div>
                         </div>
                     </div>
-                    <Content />
-                <Footer />
+                    {/* <Content />
+                <Footer /> */}
             </Fragment>
         )
     }
