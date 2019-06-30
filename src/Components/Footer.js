@@ -4,7 +4,9 @@ class Footer extends Component {
     render() {
         return (
             <Fragment>
-                This is the Footer            
+                <footer>
+                    this is a footer
+                </footer>
             </Fragment>
         )
     }

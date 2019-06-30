@@ -1,13 +1,13 @@
 import React, { Component, Fragment } from 'react';
 
-class Navbar extends Component {
+class Content extends Component {
     render() {
         return (
             <Fragment>
-                <div className='navbar'>Linkxs</div>
+                <div className='content'>Linkxs</div>
             </Fragment>
         )
     }
 }
 
-export default Navbar;
+export default Content;

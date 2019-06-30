@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react';
-import { Alert } from 'reactstrap';
+import Alerts from '../Components/Alert/Alert'
 import Navbar from './Navbar.js';
+import Content from './Content';
 import Footer from './Footer';
 import validate from '../Factories/Validate';
 import './Style.css';
 import axios from 'axios';
+import './Alert/Script';
 import { URL } from '../Factories/Url';
 
 class Homepage extends Component {
@@ -18,7 +20,8 @@ class Homepage extends Component {
             color: 'primary',
             error: null,
             link: null,
-            ol: null
+            ol: null,
+            status: false
         }
     }
 
@@ -32,12 +35,19 @@ class Homepage extends Component {
     submit = (e) => {
         e.preventDefault();
         const { url, string } = this.state;
+        this.setState({loading: true});
         if(!validate('url', url)) {
-            this.setState({ error: 'This URL format is invalid!'});
+            this.setState({ error: 'This URL format is invalid!', status: true, loading: false});
+            setTimeout(()=> {
+                this.setState({ error: null, status: false});
+            }, 4000)
         } else if(string === '') {
             this.canSubmit();
         } else if(!validate('string', string)) {
-            this.setState({error: 'Custom Name format is invalid!'})
+            this.setState({error: 'Custom Name format is invalid!', status: true, loading: false})
+            setTimeout(()=> {
+                this.setState({ error: null, status: false});
+            }, 4000)
         } else {
             this.canSubmit();
         }
@@ -57,51 +67,47 @@ class Homepage extends Component {
         }).then(res => {
             console.log(res);
             if(res.data.code === 200) {
-                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol });
+                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol, status: true, loading: false });
+                setTimeout(()=> {
+                    this.setState({ error: null, status: false});
+                }, 4000)
             } else {
-                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol });
+                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol, status: true, loading: false });
+                setTimeout(()=> {
+                    this.setState({ error: null, status: false});
+                }, 4000)
             }
         })
     }
 
-    onDismiss = () => {
-        this.setState({ visible: false });
+    focus = () => {
+        this.setState({ link: null })
     }
 
     render() {
-        const { url, string, loading, error, visible, color, link, ol } = this.state;
-        console.log('link '+link)
+        const { error, link, ol, status, loading } = this.state;
         return (
             <Fragment>
                 <Navbar />
                     <div className='row'>
                         <div className='column'>
                             <div className='left_section'>
-                                column 1
-                                {
-                                        error &&
-                                        <Alert color={color} isOpen={visible} toggle={this.onDismiss}>
-                                            {error} Visit <a href={link}>{link}</a>
-                                        </Alert>
-                                    }
+                                URL SHORTNER
                             </div>
                         </div>
                         <div className='column'>
                             <div className='right_section'>
                                 <div className='right_content'>
                                     <form onSubmit={this.submit} className='form'>
-                                      {
-                                        error &&
-                                        <Alert color='warning' isOpen={visible} toggle={this.onDismiss}>
-                                            {error} visit <a href={ol} target='_blank'>{link}</a>
-   
-                                        </Alert>
+                                    {
+                                        error && status && <Alerts text={error} />
                                     }
                                         <input 
                                             type='text' 
                                             name='url'
                                             placeholder='Enter long URL...' 
                                             onChange={this.handleChange}
+                                            onFocus={this.focus}
                                             required
                                         /><br /><br />
                                         
@@ -112,14 +118,19 @@ class Homepage extends Component {
                                             onChange={this.handleChange}
                                         />
                                         <div className='eg'>(e.g &nbsp; fashsionweek7)</div>
+                                        {
+                                            link &&
+                                            <div className='links'>visit: <a href={ol} target='_blank'>{link}</a></div>
+                                        }
                                         <div className='buttons'>
-                                            <button className='btn2'>Shorten URL</button>
+                                            <button  className={!loading ? 'btn2' : 'btn3'}>{!loading ? <span>Shorten URL</span> : <span className='loading'>Loading...</span> }</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <Content />
                 <Footer />
             </Fragment>
         )
