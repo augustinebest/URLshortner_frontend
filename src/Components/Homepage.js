@@ -17,7 +17,7 @@ class Homepage extends Component {
             string: '',
             loading: false,
             visible: true,
-            color: 'primary',
+            color: null,
             error: null,
             link: null,
             ol: null,
@@ -37,14 +37,14 @@ class Homepage extends Component {
         const { url, string } = this.state;
         this.setState({loading: true});
         if(!validate('url', url)) {
-            this.setState({ error: 'This URL format is invalid!', status: true, loading: false});
+            this.setState({ error: 'This URL format is invalid!', status: true, loading: false, color: 0});
             setTimeout(()=> {
                 this.setState({ error: null, status: false});
             }, 4000)
         } else if(string === '') {
             this.canSubmit();
         } else if(!validate('string', string)) {
-            this.setState({error: 'Custom Name format is invalid!', status: true, loading: false})
+            this.setState({error: 'Custom Name format is invalid!', status: true, loading: false, color: 0})
             setTimeout(()=> {
                 this.setState({ error: null, status: false});
             }, 4000)
@@ -65,14 +65,13 @@ class Homepage extends Component {
                 'Content-Type': 'application/json'
             }
         }).then(res => {
-            console.log(res);
             if(res.data.code === 200) {
-                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol, status: true, loading: false });
+                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol, status: true, loading: false, color: 1 });
                 setTimeout(()=> {
                     this.setState({ error: null, status: false});
                 }, 4000)
             } else {
-                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol, status: true, loading: false });
+                this.setState({ error: res.data.message, link: res.data.link, ol: res.data.ol, status: true, loading: false, color: 0 });
                 setTimeout(()=> {
                     this.setState({ error: null, status: false});
                 }, 4000)
@@ -85,7 +84,7 @@ class Homepage extends Component {
     }
 
     render() {
-        const { error, link, ol, status, loading } = this.state;
+        const { error, link, ol, status, loading, color } = this.state;
         return (
             <Fragment>
                 <Navbar />
@@ -100,7 +99,7 @@ class Homepage extends Component {
                                 <div className='right_content'>
                                     <form onSubmit={this.submit} className='form'>
                                     {
-                                        error && status && <Alerts text={error} />
+                                        error && status && <Alerts text={error} color={color} />
                                     }
                                         <input 
                                             type='text' 
@@ -120,7 +119,7 @@ class Homepage extends Component {
                                         <div className='eg'>(e.g &nbsp; fashsionweek7)</div>
                                         {
                                             link &&
-                                            <div className='links'>visit: <a href={ol} target='_blank'>{link}</a></div>
+                                            <div className='links'><div>Visit: </div><br /><div> <a href={ol} target='_blank'>{link}</a></div></div>
                                         }
                                         <div className='buttons'>
                                             <button  className={!loading ? 'btn2' : 'btn3'}>{!loading ? <span>Shorten URL</span> : <span className='loading'>Loading...</span> }</button>

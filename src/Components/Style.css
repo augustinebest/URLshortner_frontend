@@ -25,6 +25,8 @@ html, body { margin: 0; padding: 0; }
 .left_section { 
     background-color: rgb(202, 29, 29); 
     height: 400px; 
+    display: flex; justify-content: center; align-items: center;
+    color: #fff;
 }
 .right_section {
     background-color:  #edf1f5; 
@@ -91,7 +93,7 @@ input[type='text']:focus {
 
 .links {
     margin-top: 10px;
-    font-size: 16px;
+    font-size: 14px;
     padding: 6px; background-color: #eee;
     display: flex; justify-content: center;
 }
