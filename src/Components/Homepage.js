@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import Alerts from '../Components/Alert/Alert'
 import Navbar from './Navbar.js';
-// import Content from './Content';
-// import Footer from './Footer';
+import Content from './Content';
+import Footer from './Footer';
 import validate from '../Factories/Validate';
 import './Style.css';
 import axios from 'axios';
@@ -83,6 +83,23 @@ class Homepage extends Component {
         this.setState({ link: null })
     }
 
+    copy = (e) => {
+        e.preventDefault();
+        const newLink = this.state.link;
+        const el = document.createElement('textarea');
+        el.value = newLink;
+        el.setAttribute('readonly', '');
+        el.style.left = '-9999px';
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        this.setState({ error: 'Copied!', color: 2, status: true })
+        setTimeout(()=> {
+            this.setState({ error: null, status: false});
+        }, 4000)
+    }
+
     render() {
         const { error, link, ol, status, loading, color } = this.state;
         return (
@@ -91,11 +108,18 @@ class Homepage extends Component {
                     <div className='row'>
                         <div className='column'>
                             <div className='left_section'>
-                                URL SHORTNER
+                                <div className='heads'>
+                                    <span>Turn this URL:</span><br />
+                                    https://docs.google.com/forms/d1na_Q-4/edit <br />
+                                </div><br />
+                                <div className='heads'>
+                                    <span>into this short URL:</span><br />
+                                    https://linksx.herokuapp.com/getHelp
+                                </div>
                             </div>
                         </div>
                         <div className='column'>
-                            <div className='right_section'>
+                            <div className='right_section' ref='rite_sec'>
                                 <div className='right_content'>
                                     <form onSubmit={this.submit} className='form'>
                                     {
@@ -119,7 +143,7 @@ class Homepage extends Component {
                                         <div className='eg'>(e.g &nbsp; fashsionweek7)</div>
                                         {
                                             link &&
-                                            <div className='links'><div>Visit:</div> <div><a href={ol} target='_blank'>{link}</a></div></div>
+                                            <div className='links'><div>{link}</div><div><button id='copy' onClick={this.copy}>Copy</button></div></div>
                                         }
                                         <div className='buttons'>
                                             <button  className={!loading ? 'btn2' : 'btn3'}>{!loading ? <span>Shorten URL</span> : <span className='loading'>Loading...</span> }</button>
@@ -129,8 +153,8 @@ class Homepage extends Component {
                             </div>
                         </div>
                     </div>
-                    {/* <Content />
-                <Footer /> */}
+                    <Content />
+                <Footer />
             </Fragment>
         )
     }

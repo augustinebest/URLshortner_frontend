@@ -21,6 +21,14 @@ class Alerts extends Component {
                       </div>
                 </Fragment>
             )
+        } else if(color === 2) {
+            return (
+                <Fragment>
+                      <div className='alert_div' id='alert' style={{borderRadius: '5px', color: '#fff', border: 'none', padding: '8px 8px', backgroundColor: '#000', display: 'flex', justifyContent: 'center'}}>
+                        {this.props.text}
+                      </div>
+                </Fragment>
+            )
         }
     }
 }

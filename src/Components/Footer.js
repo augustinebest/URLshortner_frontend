@@ -5,7 +5,7 @@ class Footer extends Component {
         return (
             <Fragment>
                 <footer>
-                    this is a footer
+                    Designed/created by <a href='https://twitter.com/augustinebest_' target='_blank'>AugustineBest</a>
                 </footer>
             </Fragment>
         )

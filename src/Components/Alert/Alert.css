@@ -1,7 +1,7 @@
 html, body { margin: 0; padding: 0; };
 
 .alert_div {
-    border: 1px solid rgb(108, 228, 108);
+    border: 1px solid rgb(15, 93, 15);
     width: 100%;
     height: 20px;
 }
